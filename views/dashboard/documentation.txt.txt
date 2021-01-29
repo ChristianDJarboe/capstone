@@ -1,0 +1,89 @@
+Documentation for version 4 of the project.
+Format as follows:
+
+Component name: "App"
+State:  
+    userData:{}
+
+onload:
+   state.userdata = getUserData(token,userId) // Gets user data from server 
+
+onupdate:
+    nothing
+
+userDrivenFunctions:
+    nothing
+
+Displays:
+//Uhh so the browserrouter needs to be around theses two. 
+//The header has all the nav stuff for the router
+    BrowserRouter   
+        Header
+        Router
+    /BrowserRouter
+
+
+Component name:"Header"
+Discription:
+    Contains all static components (things that are on every page)
+State:
+    userName:"",
+    headerMenuIsOpen:false,
+    leftPanelCollapsed:true,
+
+onload:
+    drop down menu button text = state.userName
+onupdate:
+    nothing
+userDrivenFunctions:
+    leftPanelButton.onClick = state.leftPanelCollapsed = inverted (flip flops between true and false)
+    headerMenuButton.onClick = state.headerMenuIsOpen = inverted
+    logo.onClick = Link to "/", loads home page
+    campaignIcon.onClick = Link to "/campaigns" loads campaign manager
+
+
+Component name:"Router"
+Discription:
+    Contains all dynamic components (things that are rendered by page)
+Display:
+    Switch
+        //CORE COMPOONENTS
+        Route path="/teams"
+            <Teams>
+        /Route
+        Route path="/scripts"
+            <ScriptsManager>
+        /Route
+        Route path="/contracts"
+            <ContractsManager>
+        /Route
+        Route path="/candidate-lists"
+            <CandidateLists>
+        /Route
+        Route path="/creator-search"
+            <CreatorSearch>
+        /Route
+        Route path="/campaigns"
+            <CampaignTools>
+        /Route
+        Route path="/"
+            <Home>
+        /Route
+npm 
+
+
+
+Component name: "home"
+Discriptions:
+    First thing the user sees when the log in. Has limited data displays for other components
+
+State:
+    top 5 most recently opened campaigns limited metrics [
+        {
+            name:"",
+            accessDate:DATE,
+            totalReachCount:INT
+        }
+    ]
+    top 5 most recent messages
+    top 5 most recent events

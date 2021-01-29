@@ -1,0 +1,706 @@
+import React, {Component} from "react";
+import LineGraph from "../graphs/lineGraph";
+
+
+import fileIcon from "./images/fileIconWhite.png"
+import plusIcon from "./images/plusIconWhite.png"
+
+
+export default class CampaignManager extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+        strategyOption:"Strategy",
+        foreground:"",
+
+        scriptsOpen:false,
+        methodsOpen:false,
+        platformsOpen:false,
+        creatorsOpen:false,
+        strategyOptionsOpen:false,
+        audienceOpen:false,
+        campaignHomeOpen:true,
+       
+        campaign:{
+          metrics:{
+            totalReach:0,
+            affiliateLinkClicks:0,
+            investment:0,
+            returnOnInvestment:0,
+            sales:0,
+            customers:0,
+          },
+          strategy:{
+            targetAudience:"",
+            targetMetrics:{
+              reach:0,
+              websiteVisits:0,
+              investment:0,
+              returnOnInvestment:0,
+              sales:0,
+              customers:0,
+            }
+          },
+          creators:[
+
+          ],
+          scripts:[
+
+          ],
+          platforms:[
+
+          ],
+          methods:[
+
+          ]
+        },
+    }
+}
+  componentDidMount(){
+    
+  }
+
+  render(){
+      return (
+
+        <div id="campaignTools" className="foreground">
+          <div className="toolHeader">
+            <h1 onClick={()=>{
+              this.foreground("home");
+              this.setState({strategyOption:"Strategy"});
+ 
+              this.setState({strategyOptionsOpen:false});
+             }}>Campaign Manager</h1>
+            <div class="toolSubHeader">
+             <h1>Fall Release</h1>
+             <img src={fileIcon}></img>
+             <img src={plusIcon}></img>
+             <div>
+               {this.state.strategyOptionsOpen ? 
+               (
+                 <button id="stratButton" className="subHeaderButton" onClick={()=>{this.setState({strategyOptionsOpen:false})}}>Strategy</button>
+               ):(
+                 <button id="stratButton" className="subHeaderButton" onClick={()=>{this.setState({strategyOptionsOpen:true})}}>{this.state.strategyOption}</button>
+               )}
+               {this.state.strategyOptionsOpen ? 
+               (
+                 <div id="strategyOptionContainer">
+                   <button 
+                     onClick={()=>{
+                       this.setState({strategyOption:"Scripts"});
+                       this.setState({strategyOptionsOpen:false});
+                       this.foreground("scripts");
+                     }}>
+                     Scripts
+                   </button>
+                   <button 
+                     onClick={()=>{
+                       this.setState({strategyOption:"Methods"});
+                       this.setState({strategyOptionsOpen:false});
+                       this.foreground("methods")
+                     }}>
+                     Methods
+                   </button>
+                     
+                   <button 
+                     onClick={()=>{
+                       this.setState({strategyOption:"Platforms"});
+                       this.setState({strategyOptionsOpen:false})
+                       this.foreground("platforms")
+                     }}>
+                     Platforms
+                   </button>
+                   <button 
+                     onClick={()=>{
+                       this.setState({strategyOption:"Creators"});
+                       this.setState({strategyOptionsOpen:false})
+                       this.foreground("creators")
+                     }}>
+                     Creators
+                   </button>
+                   <button 
+                     onClick={()=>{
+                       this.setState({strategyOption:"Audience"});
+                       this.setState({audienceOptionsOpen:false})
+                       this.foreground("audience")
+                     }}>
+                     Audience
+                   </button>
+                 </div>
+               ):(null)}
+             </div>
+            </div>
+          </div>
+         <div className="toolBody">
+         {
+                 this.state.campaignHomeOpen ? 
+                 (
+                   <div className="strategyComponent">
+                     <h1>Home</h1>
+                     <div id="homeBody">
+                       <div id="selectedMetricDisplay">
+                       
+                       </div>
+                       <div id="metricSelection">
+ 
+                       </div>
+                     </div>
+                   </div>
+                 ):(null)
+               }
+          </div>
+        </div>
+     );
+    }
+}
+
+  foreground(newForeground){
+    // console.log(newForeground)
+    // if(newForeground == "scripts"){
+    //   this.setState({scriptsOpen:true})
+    // }else{this.setState({scriptsOpen:false})}
+    // if(newForeground == "methods"){
+    //   this.setState({methodsOpen:true})
+    // }else{this.setState({methodsOpen:false})}
+    // if(newForeground == "platforms"){
+    //   this.setState({platformsOpen:true})
+    // }else{this.setState({platformsOpen:false})}
+    // if(newForeground == "creators"){
+    //   this.setState({creatorsOpen:true})
+    // }else{this.setState({creatorsOpen:false})}
+    // if(newForeground == "home"){
+    //   this.setState({campaignHomeOpen:true})
+    // }else{this.setState({campaignHomeOpen:false})}
+    // if(newForeground == "audience"){
+    //   this.setState({audienceOpen:true})
+    // }else{this.setState({audienceOpen:false})}
+  }
+
+
+
+  Some basic reusable COMPONENTS
+
+
+  surface
+    acts as a container
+    
+
+
+
+
+    getAccountMetrics(){
+    let data;
+    let token = this.getCookie("token");
+    $.ajax({
+        type:"GET",
+        url: "http://localhost:8080/api/brand-metrics",
+        token:token,
+        headers:{user_id:this.getCookie("user_id")},
+        success:(response) =>{
+        data=response[0];
+        console.log(data);
+        this.setState({accountMetrics:data})
+
+        },
+        error:(response)=>{
+            console.log("error:");
+            console.log(response);
+        }
+    })
+  }
+  getCampaigns(){
+    let data;
+    let token = this.getCookie("token");
+    $.ajax({
+        type:"GET",
+        url: "http://localhost:8080/api/campaigns",
+        token:token,
+        headers:{user_id:this.getCookie("user_id")},
+        success:(response)=>{
+            console.log(response);
+            if(response.length>0){
+                this.setState({recentCampaigns:response});
+                this.setState({noCampaigns:false})
+            }else{
+                this.setState({noCampaigns:true});
+            }
+        },
+        error:(response)=>{
+            console.log("error:");
+            console.log(response);
+        }
+    })
+  }
+  getCampaignEvents(){
+    let data;
+    let token = this.getCookie("token");
+    $.ajax({
+        type:"GET",
+        url: "http://localhost:8080/api/campaigns-events",
+        token:token,
+        headers:{user_id:this.getCookie("user_id")},
+        success:(response)=>{
+            console.log(response);
+            if(response.length>0){
+                this.setState({campaignUpdates:response});
+                this.setState({noCampaignUpdates:false});
+            }else{
+                this.setState({noCampaignUpdates:true});
+            }
+        },
+        error:(response)=>{
+            console.log("error:");
+            console.log(response);
+        }
+    })
+  }
+  createNewCampaign(name){
+    let data ={
+        campaign_name:name,
+        admin_id:this.getCookie("user_id")
+    }
+    $.ajax({
+        type:"POST",
+        url: "http://localhost:8080/api/create-campaign",
+        data:JSON.stringify(data),
+        contentType: "application/json; charset=utf-8",
+        success:(response) =>{
+            console.log(response)
+            this.setState({newCampaignPopup:false})
+        },
+        error:(response)=>{
+            console.log("error:");
+            console.log(response);
+        }
+    }
+    )
+  }
+  openCampaign(id){
+
+  }
+
+
+
+
+
+
+
+   <div className="popupContainer">
+            {this.state.newCampaignPopup ? (
+            <div id="newCampaignPopup">
+                <h2>New Campaign</h2>
+                
+                <form onSubmit={(e)=>{e.preventDefault()}}>
+                    <input type="text" name="campaignName" value={this.state.newCampaignName}onChange={(e)=>{this.setState({newCampaignName:e.target.value})}}></input>
+                    <button onClick={()=>{if(this.state.newCampaignName!=""){this.createNewCampaign(this.state.newCampaignName); this.setState({newCampaignName:""})}}}>Create</button>
+                </form>
+            </div>
+            ):(
+                null
+            )}
+
+        </div>
+        <div id="leftHome">
+            <div id="topHome">
+            <div id="campaignSelection">
+                <h1>Campaigns</h1>
+                <div>
+                    {this.state.noCampaigns ?
+                    (
+                        <div>
+                            <h3>No Campaigns</h3>
+                            <button onClick={()=>{this.setState({newCampaignPopup:true})}}>Create Campaign</button>
+                        </div>
+                    ):(
+                        <div>
+                            {this.state.recentCampaigns.map((item,index)=>{
+                                let link = "/campaigns/"+item.id
+                            return(
+                                <div className="recentSelectionOption card" key={index}>
+                                    <div className="cardContent">
+                                        <h2>{item.campaign_name}</h2>
+                                    </div>
+                                    <div className="cardOptions">
+                                        <Link to={link}>
+                                            <img className="selectionIcon" src={openIcon}></img>
+                                        </Link>
+                                        <img className="selectionIcon" src={menuIcon}></img>
+                                        
+                                    </div>
+                                    <div className="cardPopupContainer">
+                                        <button>Delete</button>
+                                    </div>
+                                </div>
+                            )
+                            })}
+                            <button className="seeAllButton">See all</button>
+                        </div>
+       
+                    )}
+                   
+                </div>
+
+            </div>
+            <div id="projectionSelection">
+                <h1>Recent Projections</h1>
+                <div>
+                    {this.state.recentProjections.map((item,index)=>{
+                        return(
+                        <div className="recentSelectionOption card" key={index}>
+                            <div className="cardContent">
+                                <h2>{item.name}</h2>
+                                <h3>{item.accessDate}</h3>
+                            </div>
+                            <div className="cardOptions">
+                                <img className="selectionIcon" src={openIcon}></img>
+                                <img className="selectionIcon" src={menuIcon}></img>
+                            </div>
+                        </div>
+                        )
+                    })}
+                </div>
+                <button className="seeAllButton">Not available in beta</button>
+
+            </div>
+            </div>
+            <div id="middleHome">
+                <h1>Campaign Activity</h1>
+                <div className="feed">
+                    {this.state.noCampaignUpdates ?
+                    (
+                        <div>
+                            <h3>No Campaign Activity</h3>
+                        </div>
+                    ):(
+                        <div>            
+                            {this.state.campaignUpdates.map((item,index)=>{
+                            return(
+                                <div className="campaignUpdate card">
+                                    <div className="cardContent hoz">
+                                        <h2>{item.campaignName}</h2>
+                                        <p>{item.message}</p>
+                                    </div>
+                                    <div className="cardOptions">
+                                        <img className="selectionIcon" src={openIcon}></img>
+                                        <img className="selectionIcon" src={menuIcon}></img>
+                                    </div>
+                                </div>
+                            )})}
+                            <button className="seeAllButton">See all</button>
+                        </div>
+                    )}
+        
+                </div>
+
+            </div>
+            <div id="bottomHome">
+                <h1>Account Metrics</h1>
+                <div>
+                    <div id="accountMetricsDisplay">
+                        <div>
+                            <h2>Reach: {this.state.accountMetrics.total_reach}</h2>
+                            <h2>Clicks: {this.state.accountMetrics.total_clicks}</h2>
+                            <h2>Rating: {this.state.accountMetrics.rating}</h2>
+                        </div>
+                        <div>
+                            <h2>Payments: {this.state.accountMetrics.total_payments}</h2>
+                            <h2>Revenue: {this.state.accountMetrics.total_revenue}</h2>
+                            <h2>Updated on: {this.state.accountMetrics.insert_date}/5</h2>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        {/* <div id="rightHome">
+                <div>
+                    <h1>Team Notifications</h1>
+                    <div className="feed" id="creatorMessages">
+                        {this.state.recentMessages.map((item,index)=>{
+                            return(
+                                <div className="card">
+                                    <div className="cardContent">
+                                        <h2>{item.sender_handle}</h2>
+                                        <p>{item.messageReduced}</p>
+                                    </div>
+                                    <div className="cardOptions">
+                                        <img className="selectionIcon" src={openIcon}></img>
+                                        <img className="selectionIcon" src={menuIcon}></img>
+                                    </div>
+                                </div>
+                            )
+                        })}
+                    </div>
+                    <button className="seeAllButton">See all</button>
+                </div>
+                <div>
+                    <h1>Creator Messages</h1>
+                    <div className="feed" id="teamNotifications">
+                        {this.state.teamNotifications.map((item,index)=>{
+                             return(
+                                <div className="card">
+                                    <div className="cardContent">
+                                        <h2>{item.message}</h2>
+                                        <h3>{item.campaignName}</h3>
+                                    </div>
+                                    <div className="cardOptions">
+                                        <img className="selectionIcon" src={openIcon}></img>
+                                        <img className="selectionIcon" src={menuIcon}></img>
+                                    </div>
+                                </div>
+                            )
+                        })}
+                    </div>
+                    <button className="seeAllButton">See all</button>
+                </div>
+        </div> */}
+
+
+
+
+
+
+
+
+
+
+
+import React, {Component} from "react";
+import LineGraph from "../graphs/lineGraph";
+import $ from "jquery";
+import { Link } from "react-router-dom"
+
+import fileIcon from "./images/fileIconWhite.png"
+import plusIcon from "./images/plusIconWhite.png"
+
+import CManHome from "./sub/campaignHome";
+
+
+export default class CampaignManager extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+        data:props.data,
+
+        strategyOption:"Strategy",
+        foreground:"",
+
+        campaigns:[],
+        noCampaigns:true,
+
+        scriptsOpen:false,
+        advertismentsOpen:false,
+        strategyOptionsOpen:false,
+        audienceOpen:false,
+        campaignHomeOpen:true,
+
+        campaignData:{}
+    }
+    this.getData = this.getData.bind(this);
+}
+
+getCookie(name) 
+{
+  var match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+  if (match) {
+    return(match[2])
+  }
+  else{
+      console.log('--could not find cookie---');
+  }
+}
+  componentDidMount(){
+    this.getData(this.props.data.id)
+    this.getCampaigns()
+
+  }
+  getCampaigns(){
+    let token = this.getCookie("token");
+    $.ajax({
+        type:"GET",
+        url: "http://localhost:8080/api/campaigns",
+        token:token,
+        headers:{user_id:this.getCookie("user_id")},
+        success:(response)=>{
+            console.log(response);
+            if(response.length>0){
+                this.setState({campaigns:response});
+                this.setState({noCampaigns:false})
+            }else{
+                this.setState({noCampaigns:true});
+            }
+        },
+        error:(response)=>{
+            console.log("error:");
+            console.log(response);
+        }
+    })
+  }
+  getData(id){
+ 
+    $.ajax({
+      type:"GET",
+      url: "http://localhost:8080/api/campaign",
+      token:this.getCookie("token"),
+      headers:{campaign_id:id, user_id:this.getCookie("user_id")},
+      success:(response)=>{
+          console.log(response[0]);
+          this.setState({campaignData:response[0]});
+      },
+      error:(response)=>{
+          console.log("error:");
+          console.log(response);
+      }
+  })
+  }
+  foreground(newForeground){
+    console.log(newForeground)
+    if(newForeground == "scripts"){
+      this.setState({scriptsOpen:true})
+    }else{this.setState({scriptsOpen:false})}
+    if(newForeground == "advertisments"){
+      this.setState({advertismentsOpen:true})
+    }else{this.setState({advertismentsOpen:false})}
+    if(newForeground == "home"){
+      this.setState({campaignHomeOpen:true})
+    }else{this.setState({campaignHomeOpen:false})}
+    if(newForeground == "audience"){
+      this.setState({audienceOpen:true})
+    }else{this.setState({audienceOpen:false})}
+  }
+  toggle(input){
+    let flop;
+    if(this.state[input] == true){
+      flop = false;
+    }else{
+      flop = true;
+    }
+    this.setState({[input]:flop})
+  }
+  render(){
+      return (
+
+        <div id="campaignTools" className="foreground">
+          <div className="toolHeader">
+            <h1 onClick={()=>{
+              this.foreground("home");
+              this.setState({strategyOption:"Strategy"});
+ 
+              this.setState({strategyOptionsOpen:false});
+             }}>Campaign Manager</h1>
+            <div class="toolSubHeader">
+             <h1>{this.state.campaignData.campaign_name}</h1>
+             <img src={fileIcon} onClick={()=>{this.toggle("campaignSelectOpen") }}></img>
+             {this.state.campaignSelectOpen ?
+             (
+              <div>
+                {this.state.noCampaigns ? (<div>No Campaigns</div>)
+                :
+                (
+                <div>
+                  <h3>Campaigns</h3>
+                  {this.state.campaigns.map((item,index)=>{
+                    let link = "/campaigns/"+item.id
+                    return(
+                      <div key={index}>
+                        <Link to={link} onClick={()=>{this.getData(item.id)}}>
+                          <h3>{item.campaign_name}</h3>
+                        </Link>
+                      </div>
+                    )
+                  })}
+                </div>
+                )}
+              </div>
+             ):(null)}
+             <img src={plusIcon}></img>
+             <div>
+               {this.state.strategyOptionsOpen ? 
+               (
+                 <button id="stratButton" className="subHeaderButton" onClick={()=>{this.setState({strategyOptionsOpen:false})}}>Strategy</button>
+               ):(
+                 <button id="stratButton" className="subHeaderButton" onClick={()=>{this.setState({strategyOptionsOpen:true})}}>{this.state.strategyOption}</button>
+               )}
+               {this.state.strategyOptionsOpen ? 
+               (
+                 <div id="strategyOptionContainer">
+                   <button 
+                     onClick={()=>{
+                       this.setState({strategyOption:"Scripts"});
+                       this.setState({strategyOptionsOpen:false});
+                       this.foreground("scripts");
+                     }}>
+                     Scripts
+                   </button>
+                   <button 
+                     onClick={()=>{
+                       this.setState({strategyOption:"Advertisments"});
+                       this.setState({strategyOptionsOpen:false});
+                       this.foreground("advertisments")
+                     }}>
+                     Adverts
+                   </button>
+                     
+                   <button 
+                     onClick={()=>{
+                       this.setState({strategyOption:"Platforms"});
+                       this.setState({strategyOptionsOpen:false})
+                       this.foreground("platforms")
+                     }}>
+                     Platforms
+                   </button>
+                   <button 
+                     onClick={()=>{
+                       this.setState({strategyOption:"Creators"});
+                       this.setState({strategyOptionsOpen:false})
+                       this.foreground("creators")
+                     }}>
+                     Creators
+                   </button>
+                   <button 
+                     onClick={()=>{
+                       this.setState({strategyOption:"Audience"});
+                       this.setState({audienceOptionsOpen:false})
+                       this.foreground("audience")
+                     }}>
+                     Audience
+                   </button>
+                 </div>
+               ):(null)}
+             </div>
+            </div>
+          </div>
+         <div className="toolBody">
+            {
+              this.state.campaignHomeOpen ? 
+              (
+                <div className="strategyComponent">
+                  <h1>Home</h1>
+                  <div id="homeBody">
+                    <div id="selectedMetricDisplay">
+
+                    </div>
+                    <div id="metricSelection">
+                    </div>
+                  </div>
+                </div>
+              ):(null)
+            }
+            {
+              this.state.advertismentsOpen ?
+              (
+                <div className="strategyComponent">
+                  <h1>Advertisments</h1>
+               
+                </div>
+              ):(null)
+            }
+          </div>
+        </div>
+     );
+    }
+}
+
+
+
+

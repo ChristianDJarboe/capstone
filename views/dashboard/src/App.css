@@ -1,0 +1,820 @@
+@font-face {
+  font-family: "roberto";
+  src: url(./fonts//Roboto/Roboto-Thin.ttf);
+  }
+body{
+  font-family:"roberto";
+}
+.App {
+  text-align: center;
+}
+
+.App-header {
+  position: fixed;
+  background-color: #2b2d30;
+  height:60px;
+  display: flex;
+  align-items:center;
+  justify-content: space-between;
+  font-size: calc(10px + 2vmin);
+  color:black;
+  width:100%;
+  z-index: 2;
+}
+
+.App-header> button{
+  font-size:22px;
+  margin-left:100px;
+  padding:5px;
+}
+#popupContainer{
+  position: absolute;
+  top:70px;
+  left:25%;
+}
+.savedSearchesPopup>div{
+width:300px;
+border:2px solid black;
+display: flex;
+flex-direction: column;
+justify-content: flex-start;
+}
+.savedSearchResult{
+width:200px;
+display: flex;
+margin-left:10px;
+}
+#openDropDownMenu{
+  font-size:24px;
+  height:40px;
+}
+.dropDownMenu{
+  display:flex;
+  flex-direction: column;
+  margin-top:5px;
+}
+#headerMenuContainer{
+  margin-right:100px;
+  height:40px;
+}
+#headerMenuContainer>div{
+  height:40px;
+}
+#searchOptions{
+  width:1000px;
+  min-height:100px;
+  box-shadow: 0px 2px 2px 0px black;
+  border:2px solid black;
+}
+#searchOptions>h2{
+  width:50%;
+  margin:0px;
+}
+.platformSelection{
+  display:flex;
+  width:100%;
+  border-top:1px solid black;
+  border-bottom: 1px solid black;
+  padding-bottom:5px;
+}
+.platformSelection>button{
+  margin:5px;
+  font-size:18px;
+}
+.formMetrics{
+  background-color:red;
+  width:50%;
+
+}
+.formMetrics>div{
+background-color:blue;
+display:flex;
+justify-content: space-between;
+padding:5px;
+}
+.formMetrics>div>label{
+  width:100px;
+}
+.metricInput{
+  width:80px;
+}
+#searchFormsContainer>div>form{
+  display: flex;
+  font-size:20px;
+}
+#resultsFeed{
+  position: relative;
+  top:100px;
+  border:2px solid black;
+  width:1200px;
+}
+#selectedResults{
+  position: relative;
+  left:100px;
+  width:200px;
+  height:900px;
+  background-color:blue;
+  top:100px;
+}
+
+#saveAsPopup{
+  width:300px;
+  height:150px;
+  background-color:green;
+}
+#rightAsideMenu{
+  background-color:pink;
+  position: fixed;
+  right:150px;
+  top:100px;
+  width:80px;
+  height:500px;
+}
+#comparisonTools{
+  position: relative;
+  top:100px;
+  width:1200px;
+  background-color:red;
+}
+.metricsTableRow{
+  display: flex;
+  width:1150px;
+  background-color:blue;
+  justify-content: space-between;
+}
+.metricsTableRow>h1{
+  margin:0px;
+}
+.metricsTableRow>div>h4{
+  border:1px solid black;
+  padding:5px;
+  margin:0px;
+  justify-self: flex-end;
+  width:130px;
+  font-size:14px;
+}
+.metricsTableRow>div{
+  display:flex;
+}
+canvas{
+  border:2px solid black;
+}
+.graphContainer{
+  display:flex;
+  margin-left:100px;
+  margin-bottom:20px;
+}
+
+.doubleSlider{
+  position: relative;
+   width: 800px; 
+   margin: 0 auto 20px; 
+   height: 5px; 
+   text-align: center;
+   background-color:red;
+   width:300px;
+}
+
+
+/* The slider itself */
+.slider {
+  -webkit-appearance: none;  /* Override default CSS styles */
+  appearance: none;
+  width: 300px; /* Full-width */
+  height: 5px; /* Specified height */
+  background: none; /* Grey background */
+  pointer-events: none; 
+  position: absolute;
+  left:0px;
+  top:-2px;
+}
+
+/* Mouse-over effects */
+.slider:hover {
+  opacity: 1; /* Fully shown on mouse-over */
+}
+
+/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+.slider::-webkit-slider-thumb {
+  pointer-events:all;
+  z-index: 1;
+}
+.doubleSliderLabels{
+  display: flex;
+  justify-content: space-between;
+  width:300px;
+  margin: 0 auto 20px; 
+
+}
+.forms{
+  max-height: 760px;
+  overflow-y: scroll;
+}
+.form{
+  margin-bottom:100px;
+}
+.form>div{
+  display:flex;
+}
+.form>h1{
+   margin:10px;
+   width:50%;
+   text-align: start;
+   text-transform: capitalize;
+
+}
+.metrics{
+  width:50%;
+  border-right:2px solid black;
+}
+.metrics>h2,.rangeDimensions>h2{
+  text-align: start;
+  font-size:24px;
+  margin-left:10px;
+}
+.metric{
+  display:flex;
+  padding-left:20px;
+  width:300px;
+  justify-content: space-between;
+  text-transform: capitalize;
+}
+.metric>input{
+  width:150px;
+  font-size:18px;
+}
+
+.rangeDimensions{
+  width:50%;
+}
+
+.stringDimensions{
+  border-bottom:2px solid black;
+  padding-bottom:50px;
+}
+.rangeDimension>h1{
+font-size:20px;
+}
+
+#leftPanel.collapsed{
+  position: fixed;
+  top:60px;
+  background-color: #2b2d30;
+  width:70px;
+  height:1000px;
+
+}
+#leftPanel.expanded{
+  position: fixed;
+  top:60px;
+  background-color: #2b2d30;
+  width:200px;
+  height:1000px;
+
+}
+.panelIcon{
+  width:50px;
+  transition: all .2s ease-in-out;
+  margin-bottom:10px;
+  padding:5px;
+}
+.panelIcon:hover{
+  width:50px;
+  background-color:gray;
+}
+#leftPanelButton{
+  font-size:30px;
+  margin:15px;
+}
+#homeButton{
+  font-size:30px;
+  width:160px;
+  height:40px;
+}
+#searchBar{
+height:35px;
+background-color: #40454b;
+border-style: none;
+width:600px;
+color:white;
+font-size:22px;
+padding:5px;
+}
+#searchButton{
+  padding:0px;
+  width:40px;
+  border-style: none;
+  background-color: #33363a;
+}
+#searchBarContainer{
+  display: flex;
+}
+.poopy{
+  font-size:30px;
+  margin-right:20px;
+  color:white;
+  background-color: #2b2d30;
+  border-style:none;
+}
+.poopy:hover{
+  color:green;
+}
+body{
+  background-color:rgb(31, 29, 29);
+}
+.foreground{
+  position: relative;
+  /* border: 2px solid white; */
+  top:70px;
+  left:80px;
+  width:1400px;
+  padding:20px;
+
+}
+
+
+#campaignTools{
+  color:white;
+}
+.toolHeader{
+  display:flex;
+  border-bottom:2px solid white;
+  padding-bottom:10px;
+  position:fixed;
+  z-index: 1;
+  background-color:rgb(31, 29, 29);
+  width:100%;
+}
+.toolHeader>h1{
+  margin:0px;
+  border-right:20px solid rgb(255, 174, 0);
+  padding-right:15px;
+  transition: all .2s ease-in-out;
+  border-left:2px solid rgba(255, 0, 0, 0);
+}
+.toolHeader>h1:hover{
+  border-left:2px solid red;
+  cursor: pointer;
+}
+.toolSubHeader{
+  display:flex;
+  align-items: center;
+}
+.toolSubHeader>*{
+  height:60px;
+  margin:0px;
+  background-color:rgba(156, 147, 147, 0);
+  color:white;
+  font-size:26px;
+}
+.toolSubHeader>button{
+  font-size:24px;
+  border-style: none;
+}
+.toolSubHeader>h1{
+  height:40px;
+  border-top:1px solid rgb(255, 174, 0);
+  border-bottom:1px solid rgb(255, 174, 0);
+
+  margin-left:30px;
+}
+
+.toolBody{
+  position: relative;
+  top:90px;
+  width:100%;
+  height:900px;
+}
+#campaignMetrics{
+
+}
+#stratButton{
+  font-size:30px;
+  background-color:rgba(156, 147, 147, 0);
+  border-style:none;
+  color:white;
+  margin-top:10px;
+  width:200px;
+  cursor: pointer;
+  transition: all .2s ease-in-out;
+  border-left:2px solid rgba(255, 0, 0, 0);
+
+}
+#stratButton:hover{
+  border-left:6px solid red;
+
+}
+#stratButton:focus{
+  outline: none;
+}
+#strategyOptionContainer{
+  display:flex;
+  flex-direction: column;
+  margin-top:24px;
+  background-color:rgb(31, 29, 29);
+  padding-bottom:30px;
+  border-bottom: 2px solid white;
+  border-left: 2px solid white;
+  border-right: 2px solid white;
+
+}
+#strategyOptionContainer>button{
+  font-size:30px;
+  background-color:rgba(0, 0, 0, 0);
+  border-style:none;
+  color:white;
+  border-bottom:2px solid white;
+  padding-top:10px;
+  transition: all .2s ease-in-out;
+  width:80%;
+  margin:0 auto;
+}
+#strategyOptionContainer>button:hover{
+  border-bottom:2px solid rgb(255, 0, 0);
+  cursor: pointer;
+
+}
+#strategyOptionContainer>button:focus{
+  outline: none;
+}
+.strategyComponent>h1{
+width:150px;
+margin:0px;
+font-size:30px;
+}
+#homeBody{
+  display:flex;
+}
+#selectedMetricDisplay{
+  width:900px;
+  height:600px;
+  border:2px solid white;
+  margin-left:30px;
+}
+#metricSelection{
+  width:500px;
+  height:600px;
+  border:2px solid white;
+  margin-left:50px;
+}
+
+.subHeaderButton{
+  transition: all .2s ease-in-out;
+  border-left:2px solid rgba(255, 0, 0, 0);
+}
+.subHeaderButton:hover{
+  border-left:2px solid rgb(255, 0, 0);
+}
+.campaignOptions{
+  width:600px;
+
+}
+.campaignOptions>h1{
+  font-size: 24px;
+  margin:0px;
+  text-align: left;
+  padding:15px;
+  margin-left:15px;
+}
+.campaignOption{
+  border-left:4px solid white;
+  display:flex;
+  margin-left:15px;
+  padding-left:10px;
+  align-items: center;
+  width:100%;
+  justify-content: space-between;
+  margin-bottom:15px;
+  transition: all .2s ease-in-out;
+
+}
+.campaignOption:hover{
+  border-left:4px solid rgb(255, 0, 0);
+}
+.campaignOption>div>h2{
+  font-size:16px;
+  text-align: left;
+}
+.campaignOption>div>h1{
+  font-size:20px;
+}
+.campaignOption>div>button{
+  background-color:rgba(255, 0, 0, 0);
+  color:white;
+  border-style: none;
+  font-size:18px;
+  height:60px;
+  border-left:2px solid rgba(255, 0, 0, 0);
+  transition: all .2s ease-in-out;
+
+}
+.campaignOption>div>button:hover{
+border-left:2px solid red;
+}
+#selectionFeed{
+  margin-top:20px;
+  border-left:3px solid white;
+  border-right:3px solid white;
+  width:650px;
+  height:760px;
+}
+#campaignSelectionHeader{
+  display:flex;
+  border-bottom:5px solid white;
+  align-items: center;
+}
+#campaignSelectionHeader>button{
+  font-size:24px;
+  height:50px;
+  background-color:rgba(255, 0, 0, 0);
+  border-style:none;
+  color:white;
+  border-left:3px solid rgba(255, 0, 0, 0);
+  margin-left:20px;
+  transition: all .2s ease-in-out;
+  outline: none;
+}
+#campaignSelectionHeader>button:hover{
+  border-left:3px solid rgb(255, 0, 0);
+
+}
+#simulatedCampaigns>h1{
+  color:rgb(255, 238, 0);
+}
+#activeCampaigns>h1{
+  color:rgb(214, 0, 0);
+}
+#completeCampaigns>h1{
+  color:rgb(0, 255, 76);
+}
+#campaignActivityFeed{
+  width:650px;
+  height:760px;
+  border: 2px solid white;
+  margin-left:20px;
+  margin-top:20px;
+}
+#newCampaignPopup{
+  position: fixed;
+  top:156px;
+  flex-direction:column ;
+  width:800px;
+  border:5px solid white;
+  border-top:0px;
+  left:25%;
+  background-color:rgb(31, 29, 29);
+}
+#newCampaignForm{
+  display:flex;
+}
+#newCampaignForm>div{
+  width:50%;
+}
+#campaignFormLeft>input{
+  font-size:26px;
+  width:90%;
+  margin-bottom:10px;
+}
+#campaignFormLeft>textarea{
+  font-size:22px;
+  width:90%;
+  height:300px;
+}
+#campaignFormRight>div>h1{
+  font-size:30px;
+  margin:0px;
+  margin-bottom:10px;
+}
+#importSelection{
+  border-bottom:5px solid white;
+  margin-bottom:15px;
+  padding-bottom:15px;
+  width:90%;
+}
+#importSelection>div>button{
+  font-size:22px;
+  color:white;
+  background-color:rgba(255, 0, 0, 0);
+  border-style:none;
+  border-left:3px solid rgb(255, 0, 0);
+  transition: all .2s ease-in-out;
+}
+#importSelection>div>button:hover{
+
+  border-left:3px solid rgb(0, 255, 0);
+}
+#platformSelection{
+  width:90%;
+}
+#platformSelection>div{
+  display:flex;
+  justify-content: space-around;
+}
+.pee{
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  font-size:24px;
+}
+.pee>input{
+  margin-top:10px;
+  width:30px;
+  height:30px;
+}
+#yeety{
+  display:flex;
+  justify-content: space-around;
+  margin-top:20px;
+}
+#yeety>button{
+  font-size:26px;
+  color:white;
+  border-style:none;
+  background-color:rgba(255, 0, 0, 0);
+  border-left:3px solid rgb(255, 0, 0);
+  transition: all .2s ease-in-out;
+}
+#yeety>button:hover{
+  border-left:3px solid rgb(0, 255, 0);
+}
+
+
+
+
+/*Start of v4 css. UHH someday go through the top and delete what you dont need*/
+
+
+
+#leftHome, #rightHome{
+  width:45%;
+  height:890px;
+  border:2px solid white;
+}
+#leftHome>div{
+  width:100%;
+  min-height: 200px;
+}
+#leftHome>div>h1{
+  text-align: left;
+  padding-left:15px;
+  color:white;
+}
+#topHome{
+  display: flex;
+  justify-content: space-between;
+}
+#topHome>div{
+  width:50%;
+  color:white;
+}
+.recentSelectionOption>div>h2{
+  font-size:20px;
+}
+.recentSelectionOption>div>h3{
+  font-size:16px;
+}
+#homeScreen{
+  display: flex;
+}
+.card{
+  color:white;
+  text-align: left;
+  width:90%;
+  margin:0 auto;
+  display:flex;
+  justify-content: space-between;
+  transition: all .2s ease-in-out;
+  border-left:2px solid rgba(0, 0, 0, 0)
+}
+
+.card>div>*{
+  margin:5px;
+}
+.cardOptions>img{
+  transition: all .2s ease-in-out;
+}
+.selectionIcon{
+  width:30px;
+}
+
+.card:hover div>img{
+  filter: grayscale(1) invert(.4);
+}
+.card:hover{
+ border-left:2px solid gray;
+ cursor: pointer;
+}
+#accountMetricsDisplay{
+display:flex;
+justify-content: space-around;
+color:white;
+}
+#accountMetricsDisplay>div{
+  width:300px;
+}
+#accountMetricsDisplay>div>h2{
+margin:0px;
+text-align: left;
+}
+#topHome>div>h1{
+margin:5px;
+}
+.hoz{
+  display:flex;
+  align-items: center;
+  justify-content: space-between;
+  
+}
+.hoz>p{
+  padding-bottom:5px;
+}
+.hoz>h2{
+  width:120px;
+}
+#rightHome{
+  color:white;
+  text-align: left;
+}
+.cardContent{
+  color:white;
+}
+.seeAllButton{
+  width:100%;
+  font-size:24px;
+  background-color:rgba(0, 0, 0, 0);
+  color:white;
+  border-style: none;
+  cursor: pointer;
+  transition: all .2s ease-in-out;
+}
+.seeAllButton:hover{
+color:red;
+}
+.cardContent{
+  font-size:14px;
+}
+#fbPrompt{
+  position: fixed;
+  top:150px;
+  left:25%;
+  width:50%;
+  height:400px;
+  background-color:white;
+  z-index: 1;
+}
+
+#messengerContainer{
+  width:900px;
+  height:800px;
+  position: fixed;
+  bottom:10px;
+  right:10px;
+  background-color:white;
+  display:flex;
+  flex-direction: column;
+  z-index:1;
+}
+#selectedThread{
+  background-color:gray;
+  width:750px;
+  height:100%;
+}
+.messageCard{
+
+}
+#messengerBody{
+  display: flex;
+  flex-direction: row-reverse;
+}
+#followingPostContainer{
+  width:800px;
+  background-color:white;
+  min-height:1200px;
+  margin-left:20px;
+  color:black;
+}
+#createPostContainer{
+  display:flex;
+  flex-direction: column;
+  position: fixed;
+  top:300px;
+  left:300px;
+  background-color:white;
+  z-index:1;
+}
+#createPostContainer>form{
+  display:flex;
+  flex-direction: column;
+}
+.leftPanelButton{
+  color:white;
+  text-decoration: none;
+}
+.audienceSearchResult{
+  width:700px;
+  color:white;
+  background-color: #2b2d30;
+}
+.audienceSearchResult>img{
+  width:400px;
+}
