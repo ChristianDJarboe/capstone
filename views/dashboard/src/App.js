@@ -21,7 +21,7 @@ class App extends React.Component {
   constructor(){
     super();
     this.state = {
-      portalURL:"https://ef206a96d208.ngrok.io",
+      portalURL:"https://1c353115f1c0.ngrok.io",
       fbPrompt:false,
       fbData:{},
       user_type:""
